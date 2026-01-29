@@ -1,29 +1,51 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Savr app theme colors and design tokens
  */
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Savr brand colors
+const primaryGreen = '#789F80';
+const sageGreenBg = 'rgba(120, 159, 128, 0.28)';
+const white = '#FFFFFF';
+const textDark = '#11181C';
+const textLight = '#ECEDEE';
+const infoGreen = '#789F80';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
+    text: textDark,
+    background: white,
+    tint: primaryGreen,
     icon: '#687076',
     tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    tabIconSelected: primaryGreen,
+    // Auth screen specific colors
+    authBackground: sageGreenBg,
+    formBackground: white,
+    buttonPrimary: primaryGreen,
+    buttonText: white,
+    inputBorder: '#E0E0E0',
+    inputBackground: white,
+    infoText: infoGreen,
+    placeholderText: '#999999',
   },
   dark: {
-    text: '#ECEDEE',
+    text: textLight,
     background: '#151718',
-    tint: tintColorDark,
+    tint: primaryGreen,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    tabIconSelected: primaryGreen,
+    // Auth screen specific colors
+    authBackground: '#1a2e1f',
+    formBackground: '#2a2a2a',
+    buttonPrimary: primaryGreen,
+    buttonText: white,
+    inputBorder: '#404040',
+    inputBackground: '#2a2a2a',
+    infoText: infoGreen,
+    placeholderText: '#666666',
   },
 };
 
