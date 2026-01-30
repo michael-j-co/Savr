@@ -2,6 +2,7 @@ import { DeliveryLogos } from '@/components/ui/delivery-logos';
 import { Logo } from '@/components/ui/logo';
 import { ThemedTextInput } from '@/components/ui/text-input';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { isOnboardingCompleted } from '@/utils/onboarding-storage';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -57,7 +58,7 @@ export default function AuthScreen() {
   /**
    * Handle form submission
    */
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newErrors: typeof errors = {};
 
     // Validate email
@@ -85,10 +86,20 @@ export default function AuthScreen() {
 
     setErrors(newErrors);
 
-    // If no errors, proceed to main app
+    // If no errors, navigate appropriately
     if (Object.keys(newErrors).length === 0) {
-      // Navigate to main app (tabs)
-      router.replace('/(tabs)');
+      if (mode === 'signup') {
+        // After signup, go to onboarding
+        router.replace('/onboarding');
+      } else {
+        // After login, check if onboarding is completed
+        const completed = await isOnboardingCompleted();
+        if (completed) {
+          router.replace('/(tabs)');
+        } else {
+          router.replace('/onboarding');
+        }
+      }
     }
   };
 
