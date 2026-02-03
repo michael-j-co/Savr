@@ -1,5 +1,5 @@
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { ReactNode } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -46,7 +46,7 @@ export function OnboardingLayout({
           onPress={handleBack}
           activeOpacity={0.7}
         >
-          <IconSymbol name="chevron.left" size={24} color="#FFFFFF" />
+          <FontAwesome5 name="chevron-left" size={24} color="#FFFFFF" solid />
         </TouchableOpacity>
 
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />

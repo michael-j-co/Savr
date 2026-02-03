@@ -1,6 +1,7 @@
 import { OnboardingLayout } from '@/components/onboarding/onboarding-layout';
 import { OptionButton } from '@/components/onboarding/option-button';
 import { SliderInput } from '@/components/onboarding/slider-input';
+import { TwoOptionLayout } from '@/components/onboarding/two-option-layout';
 import {
     getQuestion,
     getTotalSteps,
@@ -12,9 +13,10 @@ import {
     getOnboardingData,
     saveOnboardingAnswer,
 } from '@/utils/onboarding-storage';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 /**
  * Dynamic journey screen renderer
@@ -89,58 +91,112 @@ export default function JourneyScreen() {
 
   const canProceed = selectedValue !== null;
 
+  // Check if this is a two-option question (use special layout)
+  const isTwoOptionQuestion =
+    question.type === 'single-choice' &&
+    question.options &&
+    question.options.length === 2;
+
+  // For two-option questions, use the special layout without OnboardingLayout wrapper
+  if (isTwoOptionQuestion && question.options) {
+    const backgroundColor = useThemeColor({}, 'authBackground');
+    return (
+      <SafeAreaView style={[styles.fullScreenContainer, { backgroundColor }]}>
+        {/* Back button at top */}
+        <View style={styles.topBar}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={handleBack}
+            activeOpacity={0.7}
+          >
+            <FontAwesome5 name="chevron-left" size={24} color="#FFFFFF" solid />
+          </TouchableOpacity>
+        </View>
+
+        <TwoOptionLayout
+          title={question.title}
+          option1={{
+            id: question.options[0].id,
+            label: question.options[0].label,
+            icon: question.options[0].icon || 'circle',
+          }}
+          option2={{
+            id: question.options[1].id,
+            label: question.options[1].label,
+            icon: question.options[1].icon || 'circle',
+          }}
+          onSelect={async (optionId) => {
+            setSelectedValue(optionId);
+            // Auto-advance after selection
+            await saveOnboardingAnswer(question.id, optionId);
+            if (currentStepIndex >= totalSteps - 1) {
+              await completeOnboarding();
+              router.replace('/(tabs)');
+            } else {
+              router.setParams({ step: (currentStepIndex + 1).toString() });
+              setSelectedValue(null);
+            }
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
+
+  // For all other questions, use the standard OnboardingLayout
   return (
     <OnboardingLayout
       currentStep={currentStepIndex}
       totalSteps={totalSteps}
       onBack={handleBack}
     >
-      {/* Question Title */}
-      <Text style={styles.questionTitle}>{question.title}</Text>
+      <View style={styles.contentWrapper}>
+        {/* Question Title */}
+        <Text style={styles.questionTitle}>{question.title}</Text>
 
-      {/* Question Content */}
-      <View style={styles.questionContent}>
-        {question.type === 'single-choice' && question.options && (
-          <View style={styles.optionsContainer}>
-            {question.options.map((option) => (
-              <OptionButton
-                key={option.id}
-                label={option.label}
-                subtitle={option.subtitle}
-                icon={option.icon}
-                selected={selectedValue === option.id}
-                onPress={() => setSelectedValue(option.id)}
-              />
-            ))}
-          </View>
-        )}
+        {/* Question Content */}
+        <View style={styles.questionContent}>
+          {question.type === 'single-choice' && question.options && (
+            <View style={styles.optionsContainer}>
+              {question.options.map((option) => (
+                <OptionButton
+                  key={option.id}
+                  label={option.label}
+                  subtitle={option.subtitle}
+                  icon={option.icon}
+                  selected={selectedValue === option.id}
+                  onPress={() => setSelectedValue(option.id)}
+                />
+              ))}
+            </View>
+          )}
 
-        {question.type === 'slider' && (
-          <SliderInput
-            min={question.min || 0}
-            max={question.max || 100}
-            value={selectedValue || question.defaultValue || 50}
-            onChange={setSelectedValue}
-            step={question.step || 1}
-          />
-        )}
+          {question.type === 'slider' && (
+            <SliderInput
+              min={question.min || 0}
+              max={question.max || 100}
+              value={selectedValue || question.defaultValue || 50}
+              onChange={setSelectedValue}
+              step={question.step || 1}
+            />
+          )}
+        </View>
+
+        {/* Next Button */}
+        <TouchableOpacity
+          style={[
+            styles.nextButton,
+            { backgroundColor: buttonColor },
+            !canProceed && styles.nextButtonDisabled,
+          ]}
+          onPress={handleNext}
+          disabled={!canProceed}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.nextButtonText, { color: buttonTextColor }]}>
+            {currentStepIndex >= totalSteps - 1 ? 'Finish' : 'Next'}
+          </Text>
+        </TouchableOpacity>
       </View>
-
-      {/* Next Button */}
-      <TouchableOpacity
-        style={[
-          styles.nextButton,
-          { backgroundColor: buttonColor },
-          !canProceed && styles.nextButtonDisabled,
-        ]}
-        onPress={handleNext}
-        disabled={!canProceed}
-        activeOpacity={0.8}
-      >
-        <Text style={[styles.nextButtonText, { color: buttonTextColor }]}>
-          {currentStepIndex >= totalSteps - 1 ? 'Finish' : 'Next'}
-        </Text>
-      </TouchableOpacity>
     </OnboardingLayout>
   );
 }
@@ -155,20 +211,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FFFFFF',
   },
+  fullScreenContainer: {
+    flex: 1,
+  },
+  topBar: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
+  backButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   questionTitle: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
     marginBottom: 32,
-    lineHeight: 36,
+    lineHeight: 40,
   },
   questionContent: {
     flex: 1,
     width: '100%',
+    justifyContent: 'center',
   },
   optionsContainer: {
     width: '100%',
+    alignItems: 'center',
   },
   nextButton: {
     borderRadius: 12,
@@ -176,6 +253,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 24,
+    width: '100%',
   },
   nextButtonDisabled: {
     opacity: 0.5,

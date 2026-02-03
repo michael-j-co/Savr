@@ -126,7 +126,7 @@ export default function AuthScreen() {
         <View style={[styles.formCard, { backgroundColor: formBackground }]}>
           <Text style={styles.formTitle}>Email</Text>
           <ThemedTextInput
-            icon="envelope.fill"
+            icon="envelope"
             placeholder="your@email.com"
             value={email}
             onChangeText={(text) => {
@@ -142,7 +142,7 @@ export default function AuthScreen() {
 
           <Text style={styles.formTitle}>Password</Text>
           <ThemedTextInput
-            icon="lock.fill"
+            icon="lock"
             placeholder="••••••••••••"
             value={password}
             onChangeText={(text) => {
@@ -159,7 +159,7 @@ export default function AuthScreen() {
             <>
               <Text style={styles.formTitle}>Confirm Password</Text>
               <ThemedTextInput
-                icon="lock.fill"
+                icon="lock"
                 placeholder="••••••••••••"
                 value={confirmPassword}
                 onChangeText={(text) => {

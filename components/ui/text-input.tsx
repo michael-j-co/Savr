@@ -1,12 +1,12 @@
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { TextInput as RNTextInput, StyleSheet, Text, View, type TextInputProps } from 'react-native';
 
 export type ThemedTextInputProps = TextInputProps & {
   lightColor?: string;
   darkColor?: string;
-  icon?: 'envelope.fill' | 'lock.fill';
+  icon?: 'envelope' | 'lock';
   errorMessage?: string;
   warningMessage?: string;
 };
@@ -34,7 +34,7 @@ export function ThemedTextInput({
       <View style={[styles.inputContainer, { backgroundColor, borderColor }]}>
         {icon && (
           <View style={styles.iconContainer}>
-            <IconSymbol name={icon} size={20} color={placeholderColor} />
+            <FontAwesome5 name={icon} size={18} color={placeholderColor} solid />
           </View>
         )}
         <RNTextInput
@@ -52,7 +52,7 @@ export function ThemedTextInput({
         <View style={styles.messageContainer}>
           {warningMessage && (
             <View style={styles.warningContainer}>
-              <IconSymbol name="exclamationmark.triangle.fill" size={12} color={infoTextColor} />
+              <FontAwesome5 name="exclamation-triangle" size={12} color={infoTextColor} solid />
               <Text style={[styles.warningText, { color: infoTextColor }]}>{warningMessage}</Text>
             </View>
           )}

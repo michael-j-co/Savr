@@ -1,4 +1,4 @@
-import { IconSymbol } from '@/components/ui/icon-symbol';
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -13,6 +13,7 @@ interface OptionButtonProps {
 /**
  * Reusable button component for multiple choice questions in onboarding
  * White rounded background with icon, text, and optional subtitle
+ * Matches styling of "What kind of Savr" screen
  */
 export function OptionButton({
   label,
@@ -25,14 +26,15 @@ export function OptionButton({
     <TouchableOpacity
       style={[styles.button, selected && styles.buttonSelected]}
       onPress={onPress}
-      activeOpacity={0.7}
+      activeOpacity={0.8}
     >
       {icon && (
         <View style={styles.iconContainer}>
-          <IconSymbol
-            name={icon as any}
-            size={24}
-            color={selected ? '#789F80' : '#666666'}
+          <FontAwesome5
+            name={icon}
+            size={32}
+            color="#789F80"
+            solid
           />
         </View>
       )}
@@ -55,44 +57,41 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
-    borderWidth: 2,
-    borderColor: 'transparent',
+    borderRadius: 20,
+    paddingVertical: 18,
+    paddingHorizontal: 24,
+    marginBottom: 16,
+    width: '90%',
+    maxWidth: 320,
+    alignSelf: 'center',
     // Shadow for elevation
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 4,
   },
   buttonSelected: {
-    borderColor: '#789F80',
     backgroundColor: '#F0F7F2',
   },
   iconContainer: {
-    marginRight: 12,
-    width: 32,
-    height: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginRight: 16,
   },
   textContainer: {
     flex: 1,
   },
   label: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: '600',
-    color: '#333333',
+    color: '#666666',
   },
   labelSelected: {
     color: '#789F80',
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#666666',
-    marginTop: 2,
+    marginTop: 4,
   },
   subtitleSelected: {
     color: '#5A7A64',

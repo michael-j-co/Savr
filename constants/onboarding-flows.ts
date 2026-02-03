@@ -36,31 +36,31 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
         id: 'cereal-burner',
         label: 'Cereal Burner',
         subtitle: "(can't make anything well)",
-        icon: 'restaurant',
+        icon: 'fire',
       },
       {
         id: 'instant-ramen',
         label: 'Instant Ramen Maker',
         subtitle: '(Low effort meals)',
-        icon: 'restaurant-menu',
+        icon: 'bowl-rice',
       },
       {
         id: 'bulk-meal-prepper',
         label: 'Bulk Meal Prepper',
         subtitle: '(Low effort, repetitive meals)',
-        icon: 'kitchen',
+        icon: 'box',
       },
       {
         id: 'aspiring-chef',
         label: 'Aspiring Chef',
         subtitle: '(Medium effort, Medium creativity)',
-        icon: 'restaurant',
+        icon: 'user-chef',
       },
       {
         id: 'michelin-chef',
         label: 'Michelin Chef',
         subtitle: '(High effort, Complex meals)',
-        icon: 'restaurant',
+        icon: 'award',
       },
     ],
   },
@@ -73,6 +73,23 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
  */
 export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
   {
+    id: 'order-type',
+    type: 'single-choice',
+    title: 'Do you order more...',
+    options: [
+      {
+        id: 'late-night',
+        label: 'Late Night Delivery',
+        icon: 'moon',
+      },
+      {
+        id: 'weekly-meals',
+        label: 'Weekly Meals',
+        icon: 'calendar-week',
+      },
+    ],
+  },
+  {
     id: 'shopping-frequency',
     type: 'single-choice',
     title: 'When do you typically shop for groceries?',
@@ -80,22 +97,22 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
       {
         id: 'beginning',
         label: 'Beginning of the Week',
-        icon: 'event',
+        icon: 'calendar-week',
       },
       {
         id: 'weekends',
         label: 'Weekends',
-        icon: 'event',
+        icon: 'calendar-day',
       },
       {
         id: 'monthly',
         label: 'Monthly',
-        icon: 'event',
+        icon: 'calendar-alt',
       },
       {
         id: 'whenever',
         label: 'Whenever I can!',
-        icon: 'event',
+        icon: 'calendar-check',
       },
     ],
   },
