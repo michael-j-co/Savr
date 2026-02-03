@@ -6,15 +6,15 @@ import { RadialSliderInput } from '@/components/onboarding/radial-slider-input';
 import { ScrollPickerInput } from '@/components/onboarding/scroll-picker-input';
 import { TwoOptionLayout } from '@/components/onboarding/two-option-layout';
 import {
-    getQuestion,
-    getTotalSteps,
-    type OnboardingQuestion,
+  getQuestion,
+  getTotalSteps,
+  type OnboardingQuestion,
 } from '@/constants/onboarding-flows';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import {
-    completeOnboarding,
-    getOnboardingData,
-    saveOnboardingAnswer,
+  completeOnboarding,
+  getOnboardingData,
+  saveOnboardingAnswer,
 } from '@/utils/onboarding-storage';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -95,7 +95,7 @@ export default function JourneyScreen() {
     if (currentStepIndex >= totalSteps - 1) {
       // Complete onboarding
       await completeOnboarding();
-      router.replace('/(tabs)');
+      router.replace('/onboarding/ready');
     } else {
       // Go to next question
       router.setParams({ step: (currentStepIndex + 1).toString() });
@@ -113,7 +113,7 @@ export default function JourneyScreen() {
     // Proceed to next question
     if (currentStepIndex >= totalSteps - 1) {
       await completeOnboarding();
-      router.replace('/(tabs)');
+      router.replace('/onboarding/ready');
     } else {
       router.setParams({ step: (currentStepIndex + 1).toString() });
       setSelectedValue(null);
