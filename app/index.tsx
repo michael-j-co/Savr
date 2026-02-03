@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import {
     KeyboardAvoidingView,
     Platform,
-    ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -117,14 +116,10 @@ export default function AuthScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, { backgroundColor }]}
     >
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
+      <View style={styles.content}>
         {/* Logo Section */}
         <View style={styles.logoSection}>
-          <Logo size={180} />
+          <Logo size={140} />
         </View>
 
         {/* Form Card */}
@@ -202,8 +197,10 @@ export default function AuthScreen() {
         </View>
 
         {/* Delivery Logos Section */}
-        <DeliveryLogos />
-      </ScrollView>
+        <View style={styles.deliverySection}>
+          <DeliveryLogos />
+        </View>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -211,21 +208,21 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 48,
+    paddingBottom: 24,
   },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingVertical: 40,
-    paddingHorizontal: 20,
+  content: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   logoSection: {
     alignItems: 'center',
-    marginBottom: 32,
+    paddingTop: 20,
   },
   formCard: {
     borderRadius: 24,
-    padding: 24,
-    marginBottom: 32,
+    padding: 20,
     // Shadow for elevation
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -255,5 +252,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     textDecorationLine: 'underline',
+  },
+  deliverySection: {
+    paddingBottom: 10,
   },
 });

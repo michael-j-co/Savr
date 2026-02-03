@@ -45,14 +45,14 @@ export function DeliveryLogos() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingVertical: 24,
+    paddingVertical: 12,
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 20,
+    marginBottom: 12,
     textAlign: 'center',
   },
   logosContainer: {
@@ -60,14 +60,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 24,
+    gap: 16,
   },
   logoItem: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo: {
-    width: 80,
-    height: 40,
+    width: 120,
+    height: 60,
   },
 });
