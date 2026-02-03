@@ -2,13 +2,14 @@
  * Onboarding flow configurations for Cook More and Order Less journeys
  */
 
-export type QuestionType = 'single-choice' | 'multi-choice' | 'slider' | 'text';
+export type QuestionType = 'single-choice' | 'multi-choice' | 'slider' | 'text' | 'logo-choice';
 
 export interface QuestionOption {
   id: string;
   label: string;
   subtitle?: string;
   icon?: string;
+  logo?: any; // For logo-based options (image source)
 }
 
 export interface OnboardingQuestion {
@@ -86,6 +87,33 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
         id: 'weekly-meals',
         label: 'Weekly Meals',
         icon: 'calendar-week',
+      },
+    ],
+  },
+  {
+    id: 'delivery-app',
+    type: 'logo-choice',
+    title: 'Which app do you use most often?',
+    options: [
+      {
+        id: 'ubereats',
+        label: 'Uber Eats',
+        logo: require('../assets/images/ubereats.png'),
+      },
+      {
+        id: 'doordash',
+        label: 'DoorDash',
+        logo: require('../assets/images/doordash.png'),
+      },
+      {
+        id: 'postmates',
+        label: 'Postmates',
+        logo: require('../assets/images/postmates.png'),
+      },
+      {
+        id: 'grubhub',
+        label: 'GrubHub',
+        logo: require('../assets/images/grubhub.png'),
       },
     ],
   },

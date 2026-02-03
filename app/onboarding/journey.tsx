@@ -1,3 +1,4 @@
+import { LogoOptionButton } from '@/components/onboarding/logo-option-button';
 import { OnboardingLayout } from '@/components/onboarding/onboarding-layout';
 import { OptionButton } from '@/components/onboarding/option-button';
 import { SliderInput } from '@/components/onboarding/slider-input';
@@ -163,6 +164,19 @@ export default function JourneyScreen() {
                   label={option.label}
                   subtitle={option.subtitle}
                   icon={option.icon}
+                  selected={selectedValue === option.id}
+                  onPress={() => setSelectedValue(option.id)}
+                />
+              ))}
+            </View>
+          )}
+
+          {question.type === 'logo-choice' && question.options && (
+            <View style={styles.optionsContainer}>
+              {question.options.map((option) => (
+                <LogoOptionButton
+                  key={option.id}
+                  logoSource={option.logo}
                   selected={selectedValue === option.id}
                   onPress={() => setSelectedValue(option.id)}
                 />
