@@ -2,7 +2,7 @@
  * Onboarding flow configurations for Cook More and Order Less journeys
  */
 
-export type QuestionType = 'single-choice' | 'multi-choice' | 'slider' | 'text' | 'logo-choice';
+export type QuestionType = 'single-choice' | 'multi-choice' | 'slider' | 'text' | 'logo-choice' | 'scroll-picker';
 
 export interface QuestionOption {
   id: string;
@@ -65,7 +65,69 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
       },
     ],
   },
-  // Add more Cook More questions as needed based on Figma
+  {
+    id: 'shopping-frequency',
+    type: 'single-choice',
+    title: 'When do you typically shop for groceries?',
+    options: [
+      {
+        id: 'beginning',
+        label: 'Beginning of the Week',
+        icon: 'calendar-week',
+      },
+      {
+        id: 'weekends',
+        label: 'Weekends',
+        icon: 'calendar-day',
+      },
+      {
+        id: 'monthly',
+        label: 'Monthly',
+        icon: 'calendar-alt',
+      },
+      {
+        id: 'whenever',
+        label: 'Whenever I can!',
+        icon: 'calendar-check',
+      },
+    ],
+  },
+  {
+    id: 'grocery-spend',
+    type: 'slider',
+    title: 'How much do you spend on groceries every time you shop?',
+    min: 50,
+    max: 150,
+    step: 1,
+    defaultValue: 100,
+  },
+  {
+    id: 'cooking-commitment',
+    type: 'scroll-picker',
+    title: 'How many times do you want to commit to cooking this week?',
+    options: [
+      {
+        id: '1',
+        label: '1x',
+      },
+      {
+        id: '2',
+        label: '2x',
+      },
+      {
+        id: '3',
+        label: '3x',
+      },
+      {
+        id: '4',
+        label: '4x',
+      },
+      {
+        id: '5',
+        label: '5x',
+      },
+    ],
+  },
 ];
 
 /**
@@ -118,42 +180,87 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
     ],
   },
   {
-    id: 'shopping-frequency',
+    id: 'app-spend',
+    type: 'slider',
+    title: 'How much do you spend on that app every week?',
+    min: 0,
+    max: 100,
+    step: 1,
+    defaultValue: 50,
+  },
+  {
+    id: 'delivery-wait-time',
+    type: 'slider',
+    title: 'How long do you usually wait for your delivery?',
+    min: 15,
+    max: 120,
+    step: 5,
+    defaultValue: 60,
+  },
+  {
+    id: 'cooking-identity',
     type: 'single-choice',
-    title: 'When do you typically shop for groceries?',
+    title: 'Which identity speaks to you most?',
     options: [
       {
-        id: 'beginning',
-        label: 'Beginning of the Week',
-        icon: 'calendar-week',
+        id: 'cereal-burner',
+        label: 'Cereal Burner',
+        subtitle: "(can't make anything well)",
+        icon: 'fire',
       },
       {
-        id: 'weekends',
-        label: 'Weekends',
-        icon: 'calendar-day',
+        id: 'instant-ramen',
+        label: 'Instant Ramen Maker',
+        subtitle: '(Low effort meals)',
+        icon: 'bowl-rice',
       },
       {
-        id: 'monthly',
-        label: 'Monthly',
-        icon: 'calendar-alt',
+        id: 'bulk-meal-prepper',
+        label: 'Bulk Meal Prepper',
+        subtitle: '(Low effort, repetitive meals)',
+        icon: 'box',
       },
       {
-        id: 'whenever',
-        label: 'Whenever I can!',
-        icon: 'calendar-check',
+        id: 'aspiring-chef',
+        label: 'Aspiring Chef',
+        subtitle: '(Medium effort, Medium creativity)',
+        icon: 'user-chef',
+      },
+      {
+        id: 'michelin-chef',
+        label: 'Michelin Chef',
+        subtitle: '(High effort, Complex meals)',
+        icon: 'award',
       },
     ],
   },
   {
-    id: 'grocery-spend',
-    type: 'slider',
-    title: 'How much do you spend on groceries every time you shop?',
-    min: 50,
-    max: 150,
-    step: 1,
-    defaultValue: 100,
+    id: 'ordering-commitment',
+    type: 'scroll-picker',
+    title: 'How many times do you want to commit to ordering this week?',
+    options: [
+      {
+        id: '1',
+        label: '1x',
+      },
+      {
+        id: '2',
+        label: '2x',
+      },
+      {
+        id: '3',
+        label: '3x',
+      },
+      {
+        id: '4',
+        label: '4x',
+      },
+      {
+        id: '5',
+        label: '5x',
+      },
+    ],
   },
-  // Add more Order Less questions as needed based on Figma
 ];
 
 /**

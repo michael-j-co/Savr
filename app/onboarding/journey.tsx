@@ -2,6 +2,7 @@ import { LogoOptionButton } from '@/components/onboarding/logo-option-button';
 import { OnboardingLayout } from '@/components/onboarding/onboarding-layout';
 import { OptionButton } from '@/components/onboarding/option-button';
 import { PermissionModal } from '@/components/onboarding/permission-modal';
+import { ScrollPickerInput } from '@/components/onboarding/scroll-picker-input';
 import { SliderInput } from '@/components/onboarding/slider-input';
 import { TwoOptionLayout } from '@/components/onboarding/two-option-layout';
 import {
@@ -222,6 +223,14 @@ export default function JourneyScreen() {
               value={selectedValue || question.defaultValue || 50}
               onChange={setSelectedValue}
               step={question.step || 1}
+            />
+          )}
+
+          {question.type === 'scroll-picker' && question.options && (
+            <ScrollPickerInput
+              options={question.options}
+              value={selectedValue}
+              onChange={setSelectedValue}
             />
           )}
         </View>
