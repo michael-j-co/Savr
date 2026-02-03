@@ -2,8 +2,8 @@ import { LogoOptionButton } from '@/components/onboarding/logo-option-button';
 import { OnboardingLayout } from '@/components/onboarding/onboarding-layout';
 import { OptionButton } from '@/components/onboarding/option-button';
 import { PermissionModal } from '@/components/onboarding/permission-modal';
+import { RadialSliderInput } from '@/components/onboarding/radial-slider-input';
 import { ScrollPickerInput } from '@/components/onboarding/scroll-picker-input';
-import { SliderInput } from '@/components/onboarding/slider-input';
 import { TwoOptionLayout } from '@/components/onboarding/two-option-layout';
 import {
     getQuestion,
@@ -53,6 +53,12 @@ export default function JourneyScreen() {
           setSelectedValue(existingAnswer);
         } else if (q.type === 'slider' && q.defaultValue !== undefined) {
           setSelectedValue(q.defaultValue);
+        } else if (q.type === 'scroll-picker' && !existingAnswer) {
+          // Initialize scroll picker with first option if no answer
+          setSelectedValue(null);
+        } else {
+          // For other question types, reset to null
+          setSelectedValue(null);
         }
       }
     };
@@ -216,13 +222,15 @@ export default function JourneyScreen() {
             </View>
           )}
 
-          {question.type === 'slider' && (
-            <SliderInput
+          {question.type === 'slider' && selectedValue !== null && (
+            <RadialSliderInput
+              key={question.id}
               min={question.min || 0}
               max={question.max || 100}
-              value={selectedValue || question.defaultValue || 50}
+              value={selectedValue}
               onChange={setSelectedValue}
               step={question.step || 1}
+              unit={question.unit || ''}
             />
           )}
 

@@ -21,6 +21,7 @@ export interface OnboardingQuestion {
   max?: number;
   step?: number;
   defaultValue?: any;
+  unit?: string; // Unit for slider values (e.g., '$', 'min')
 }
 
 /**
@@ -100,6 +101,7 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
     max: 150,
     step: 1,
     defaultValue: 100,
+    unit: '$',
   },
   {
     id: 'cooking-commitment',
@@ -187,6 +189,7 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
     max: 100,
     step: 1,
     defaultValue: 50,
+    unit: '$',
   },
   {
     id: 'delivery-wait-time',
@@ -196,6 +199,7 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
     max: 120,
     step: 5,
     defaultValue: 60,
+    unit: 'min',
   },
   {
     id: 'cooking-identity',

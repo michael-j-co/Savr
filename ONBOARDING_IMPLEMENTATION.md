@@ -15,7 +15,11 @@ Successfully implemented a dual-path onboarding flow for the Savr mobile app. Us
 - **ProgressBar** (`components/onboarding/progress-bar.tsx`): Visual progress indicator
 - **OnboardingLayout** (`components/onboarding/onboarding-layout.tsx`): Consistent wrapper with back button
 - **OptionButton** (`components/onboarding/option-button.tsx`): Multi-choice question buttons
-- **SliderInput** (`components/onboarding/slider-input.tsx`): Semicircular slider for numeric inputs
+- **RadialSliderInput** (`components/onboarding/radial-slider-input.tsx`): Radial slider for money/time inputs using react-native-radial-slider
+- **ScrollPickerInput** (`components/onboarding/scroll-picker-input.tsx`): Wheel picker for commitment frequency using react-native-wheely
+- **LogoOptionButton** (`components/onboarding/logo-option-button.tsx`): Logo-based option buttons for delivery app selection
+- **TwoOptionLayout** (`components/onboarding/two-option-layout.tsx`): Reusable layout for two-option questions
+- **PermissionModal** (`components/onboarding/permission-modal.tsx`): Modal for app intervention permission
 
 ### 3. Onboarding Screens
 - **Journey Choice** (`app/onboarding/index.tsx`): Initial screen to choose path
@@ -65,8 +69,11 @@ Onboarding data is stored in AsyncStorage with this structure:
 ## Question Types Supported
 
 1. **Single Choice**: Multiple options with icons and subtitles
-2. **Slider**: Semicircular input for numeric values ($50-$150)
-3. **Extensible**: Easy to add multi-choice, text input, etc.
+2. **Logo Choice**: Visual selection using delivery app logos
+3. **Slider**: Radial slider for numeric values (money, time)
+4. **Scroll Picker**: Wheel picker for frequency selection (1x-5x per week)
+5. **Two Option Layout**: Special layout for binary choices
+6. **Extensible**: Easy to add multi-choice, text input, etc.
 
 ## Current Question Configuration
 
@@ -118,7 +125,11 @@ To test the implementation:
 - `components/onboarding/progress-bar.tsx`
 - `components/onboarding/onboarding-layout.tsx`
 - `components/onboarding/option-button.tsx`
-- `components/onboarding/slider-input.tsx`
+- `components/onboarding/radial-slider-input.tsx`
+- `components/onboarding/scroll-picker-input.tsx`
+- `components/onboarding/logo-option-button.tsx`
+- `components/onboarding/two-option-layout.tsx`
+- `components/onboarding/permission-modal.tsx`
 
 ### Screens
 - `app/onboarding/index.tsx`
