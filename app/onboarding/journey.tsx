@@ -1,6 +1,7 @@
 import { LogoOptionButton } from '@/components/onboarding/logo-option-button';
 import { OnboardingLayout } from '@/components/onboarding/onboarding-layout';
 import { OptionButton } from '@/components/onboarding/option-button';
+import { PermissionModal } from '@/components/onboarding/permission-modal';
 import { SliderInput } from '@/components/onboarding/slider-input';
 import { TwoOptionLayout } from '@/components/onboarding/two-option-layout';
 import {
@@ -31,6 +32,8 @@ export default function JourneyScreen() {
 
   const [selectedValue, setSelectedValue] = useState<any>(null);
   const [question, setQuestion] = useState<OnboardingQuestion | null>(null);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const [selectedAppName, setSelectedAppName] = useState('');
   const totalSteps = getTotalSteps(journeyType);
   const buttonColor = useThemeColor({}, 'buttonPrimary');
   const buttonTextColor = useThemeColor({}, 'buttonText');
@@ -67,6 +70,17 @@ export default function JourneyScreen() {
   const handleNext = async () => {
     if (!question || selectedValue === null) return;
 
+    // Check if this is the delivery app question - show permission modal first
+    if (question.id === 'delivery-app') {
+      // Find the selected app name
+      const selectedOption = question.options?.find(opt => opt.id === selectedValue);
+      if (selectedOption) {
+        setSelectedAppName(selectedOption.label);
+        setShowPermissionModal(true);
+        return; // Don't proceed yet, wait for modal response
+      }
+    }
+
     // Save the answer
     await saveOnboardingAnswer(question.id, selectedValue);
 
@@ -77,6 +91,23 @@ export default function JourneyScreen() {
       router.replace('/(tabs)');
     } else {
       // Go to next question
+      router.setParams({ step: (currentStepIndex + 1).toString() });
+      setSelectedValue(null);
+    }
+  };
+
+  const handlePermissionResponse = async (granted: boolean) => {
+    setShowPermissionModal(false);
+    
+    // Save the permission response along with the app selection
+    await saveOnboardingAnswer(question!.id, selectedValue);
+    await saveOnboardingAnswer('app-permission-granted', granted);
+
+    // Proceed to next question
+    if (currentStepIndex >= totalSteps - 1) {
+      await completeOnboarding();
+      router.replace('/(tabs)');
+    } else {
       router.setParams({ step: (currentStepIndex + 1).toString() });
       setSelectedValue(null);
     }
@@ -211,6 +242,14 @@ export default function JourneyScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* Permission Modal */}
+      <PermissionModal
+        visible={showPermissionModal}
+        appName={selectedAppName}
+        onYes={() => handlePermissionResponse(true)}
+        onNo={() => handlePermissionResponse(false)}
+      />
     </OnboardingLayout>
   );
 }
