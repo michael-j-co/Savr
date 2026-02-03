@@ -187,6 +187,7 @@ export default function JourneyScreen() {
       currentStep={currentStepIndex}
       totalSteps={totalSteps}
       onBack={handleBack}
+      scrollEnabled={question.type !== 'slider' && question.type !== 'scroll-picker'}
     >
       <View style={styles.contentWrapper}>
         {/* Question Title */}

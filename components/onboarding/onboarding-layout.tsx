@@ -12,6 +12,7 @@ interface OnboardingLayoutProps {
   onBack?: () => void;
   showSkip?: boolean;
   onSkip?: () => void;
+  scrollEnabled?: boolean;
 }
 
 /**
@@ -25,6 +26,7 @@ export function OnboardingLayout({
   onBack,
   showSkip = false,
   onSkip,
+  scrollEnabled = true,
 }: OnboardingLayoutProps) {
   const router = useRouter();
   const backgroundColor = useThemeColor({}, 'authBackground');
@@ -69,6 +71,7 @@ export function OnboardingLayout({
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
+        scrollEnabled={scrollEnabled}
       >
         {children}
       </ScrollView>
