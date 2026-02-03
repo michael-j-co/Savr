@@ -1,8 +1,11 @@
 import { MetricCard } from '@/components/dashboard/metric-card';
+import { NavigationSidebar } from '@/components/dashboard/navigation-sidebar';
 import { StatsRow } from '@/components/dashboard/stats-row';
 import { RadialSliderInput } from '@/components/onboarding/radial-slider-input';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { clearOnboardingData } from '@/utils/onboarding-storage';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -11,12 +14,15 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
  * Displays user stats, savings gauge, and action buttons
  */
 export default function HomeScreen() {
+  const router = useRouter();
   const backgroundColor = useThemeColor({}, 'background');
   const buttonColor = useThemeColor({}, 'buttonPrimary');
   const buttonTextColor = useThemeColor({}, 'buttonText');
   
   // Initialize all stats to 0 (will be updated by future features)
   const [savingsAmount, setSavingsAmount] = useState(0);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  
   const stats = [
     { value: 0, label: 'ingredients left' },
     { value: 0, label: 'skips left' },
@@ -28,13 +34,32 @@ export default function HomeScreen() {
     console.log('Log a meal pressed');
   };
 
+  const handleMenuNavigation = (itemId: string) => {
+    switch (itemId) {
+      case 'logout':
+        // Clear onboarding data and navigate to login
+        clearOnboardingData();
+        router.replace('/');
+        break;
+      default:
+        // TODO: Navigate to placeholder screens
+        console.log('Navigate to:', itemId);
+    }
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <View style={styles.content}>
         {/* Header */}
         <View style={styles.header}>
-          <FontAwesome5 name="hat-chef" size={24} color="#789F80" solid />
           <Text style={styles.welcomeText}>Welcome, Aspiring Chef!</Text>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={() => setSidebarVisible(true)}
+            activeOpacity={0.7}
+          >
+            <FontAwesome5 name="bars" size={24} color="#789F80" solid />
+          </TouchableOpacity>
         </View>
 
         {/* Stats Row */}
@@ -72,6 +97,16 @@ export default function HomeScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* Navigation Sidebar */}
+      <NavigationSidebar
+        visible={sidebarVisible}
+        onClose={() => setSidebarVisible(false)}
+        onMenuItemPress={(itemId) => {
+          setSidebarVisible(false);
+          handleMenuNavigation(itemId);
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -90,9 +125,16 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     marginBottom: 12,
     gap: 10,
+    paddingHorizontal: 8,
+  },
+  menuButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   welcomeText: {
     fontSize: 22,
