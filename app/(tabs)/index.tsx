@@ -30,8 +30,7 @@ export default function HomeScreen() {
   ];
 
   const handleLogMeal = () => {
-    // TODO: Implement meal logging functionality
-    console.log('Log a meal pressed');
+    router.push('/meals/check-in' as any);
   };
 
   const handleMenuNavigation = (itemId: string) => {
