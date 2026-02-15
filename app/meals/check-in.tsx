@@ -14,8 +14,8 @@ export default function CheckInScreen() {
 
   const handleCookedWithRecipe = () => {
     console.log('Cooked with recipe');
-    // TODO: Implement meal tracking logic
-    router.back();
+    // Navigate to recipe log screen
+    router.push('/meals/recipe-log');
   };
 
   const handleCookedWithoutRecipe = () => {
