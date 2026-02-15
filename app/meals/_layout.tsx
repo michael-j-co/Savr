@@ -27,6 +27,20 @@ export default function MealsLayout() {
           presentation: 'card',
         }} 
       />
+      <Stack.Screen 
+        name="update-fridge" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
+      <Stack.Screen 
+        name="recipe-suggestions" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
     </Stack>
   );
 }

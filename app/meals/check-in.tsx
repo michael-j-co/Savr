@@ -20,8 +20,8 @@ export default function CheckInScreen() {
 
   const handleCookedWithoutRecipe = () => {
     console.log('Cooked without recipe');
-    // TODO: Implement meal tracking logic
-    router.back();
+    // Navigate to update fridge screen
+    router.push('/meals/update-fridge');
   };
 
   const handleSkip = () => {
