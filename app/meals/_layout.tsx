@@ -41,6 +41,27 @@ export default function MealsLayout() {
           presentation: 'card',
         }} 
       />
+      <Stack.Screen 
+        name="skip-reasons" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
+      <Stack.Screen 
+        name="remind-later" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
+      <Stack.Screen 
+        name="find-recipe" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
     </Stack>
   );
 }

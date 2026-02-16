@@ -26,8 +26,8 @@ export default function CheckInScreen() {
 
   const handleSkip = () => {
     console.log('Skip');
-    // TODO: Implement skip tracking logic
-    router.back();
+    // Navigate to skip reasons screen
+    router.push('/meals/skip-reasons');
   };
 
   return (
