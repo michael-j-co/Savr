@@ -42,9 +42,8 @@ export default function SaveRecipeScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        {/* Header with Title and Save Button */}
+        {/* Header with Save Button and Title */}
         <View style={styles.header}>
-          <Text style={styles.title}>Save Your New Recipe!</Text>
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleSave}
@@ -52,6 +51,7 @@ export default function SaveRecipeScreen() {
           >
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
+          <Text style={styles.title}>Save Your New Recipe!</Text>
         </View>
 
         {/* Form Container */}
@@ -177,8 +177,7 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 32,
-    alignItems: 'center',
-    position: 'relative',
+    alignItems: 'flex-end',
   },
   title: {
     fontSize: 32,
@@ -188,11 +187,10 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
+    width: '100%',
+    marginTop: 12,
   },
   saveButton: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
     backgroundColor: '#789F80',
     paddingHorizontal: 24,
     paddingVertical: 10,
