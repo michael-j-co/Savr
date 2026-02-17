@@ -69,7 +69,7 @@ export default function HomeScreen() {
           <Text style={styles.sectionTitle}>Your Savings</Text>
           <View style={styles.gaugeContainer}>
             <RadialSliderInput
-              min={50}
+              min={0}
               max={150}
               value={savingsAmount}
               onChange={setSavingsAmount}
