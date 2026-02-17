@@ -1,8 +1,9 @@
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 /**
  * Save new recipe screen with form fields
@@ -18,6 +19,7 @@ export default function SaveRecipeScreen() {
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [imageUri, setImageUri] = useState<string | null>(null);
 
   // Handle saving the recipe (mocked - no actual persistence)
   const handleSave = () => {
@@ -27,16 +29,34 @@ export default function SaveRecipeScreen() {
       return;
     }
 
-    console.log('Saving recipe:', { title, category, description, ingredients, steps });
+    console.log('Saving recipe:', { title, category, description, ingredients, steps, imageUri });
     
     // Navigate back to home
     router.replace('/(tabs)');
   };
 
-  // Handle photo picker (mocked - no actual implementation)
-  const handleAddPhoto = () => {
-    console.log('Photo picker would open here');
-    alert('Photo picker coming soon!');
+  // Handle photo picker using the system image library.
+  // Note: This is frontend-only – image is not persisted.
+  const handleAddPhoto = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert('Permission Required', 'Please allow access to your photos to continue.');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+
+    if (!result.canceled && result.assets && result.assets[0]) {
+      const uri = result.assets[0].uri;
+      setImageUri(uri);
+      console.log('Selected recipe photo URI:', uri);
+    }
   };
 
   return (
@@ -147,7 +167,11 @@ export default function SaveRecipeScreen() {
           {/* Photo Section */}
           <View style={styles.photoSection}>
             <View style={styles.photoCircle}>
-              <FontAwesome5 name="camera" size={32} color="#999" />
+              {imageUri ? (
+                <Image source={{ uri: imageUri }} style={styles.photoImage} />
+              ) : (
+                <FontAwesome5 name="camera" size={32} color="#999" />
+              )}
             </View>
             <TouchableOpacity
               style={styles.addPhotoButton}
@@ -246,6 +270,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5F5F5',
+  },
+  photoImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 60,
   },
   addPhotoButton: {
     backgroundColor: '#A8D5BA',

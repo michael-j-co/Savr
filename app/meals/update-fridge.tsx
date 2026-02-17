@@ -1,32 +1,47 @@
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React from 'react';
-import { Alert, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import React, { useState } from 'react';
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 /**
- * Update fridge screen for uploading fridge inventory photo
- * Mocked photo upload - navigates to recipe suggestions after alert
+ * Update fridge screen for uploading fridge inventory photo.
+ * Uses the device photo library to select an image, shows it in the circle,
+ * then navigates to recipe suggestions after a successful selection.
  */
 export default function UpdateFridgeScreen() {
   const router = useRouter();
   const backgroundColor = useThemeColor({}, 'authBackground');
+  const [imageUri, setImageUri] = useState<string | null>(null);
 
-  // Handle photo upload (mocked - shows alert then navigates)
-  const handleAddPhoto = () => {
-    Alert.alert(
-      'Photo Upload',
-      'Photo upload coming soon!',
-      [
-        {
-          text: 'OK',
-          onPress: () => {
-            console.log('Navigating to recipe suggestions');
-            router.push('/meals/recipe-suggestions');
-          },
-        },
-      ]
-    );
+  // Handle photo upload using the system image library.
+  // Note: This is frontend-only – image is not persisted.
+  const handleAddPhoto = async () => {
+    // Ask for media library permissions.
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert('Permission Required', 'Please allow access to your photos to continue.');
+      return;
+    }
+
+    // Open the image library so the user can pick a photo.
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+
+    if (!result.canceled && result.assets && result.assets[0]) {
+      const uri = result.assets[0].uri;
+      setImageUri(uri);
+
+      // For now we immediately navigate to recipe suggestions after a selection.
+      console.log('Selected fridge photo URI:', uri);
+      router.push('/meals/recipe-suggestions');
+    }
   };
 
   return (
@@ -40,7 +55,11 @@ export default function UpdateFridgeScreen() {
 
         {/* Photo Upload Circle */}
         <View style={styles.photoCircle}>
-          <FontAwesome5 name="camera" size={48} color="#999" />
+          {imageUri ? (
+            <Image source={{ uri: imageUri }} style={styles.photoImage} />
+          ) : (
+            <FontAwesome5 name="camera" size={48} color="#999" />
+          )}
         </View>
 
         {/* Add Photo Button */}
@@ -96,6 +115,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5F5F5',
     marginBottom: 32,
+  },
+  photoImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
   },
   addPhotoButton: {
     backgroundColor: '#A8D5BA',
