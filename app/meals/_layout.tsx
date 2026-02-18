@@ -35,6 +35,13 @@ export default function MealsLayout() {
         }} 
       />
       <Stack.Screen 
+        name="ai-loading" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
+      <Stack.Screen 
         name="recipe-suggestions" 
         options={{ 
           headerShown: false,

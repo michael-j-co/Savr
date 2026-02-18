@@ -38,9 +38,9 @@ export default function UpdateFridgeScreen() {
       const uri = result.assets[0].uri;
       setImageUri(uri);
 
-      // For now we immediately navigate to recipe suggestions after a selection.
+      // Show AI loading screen, then it will replace with recipe suggestions.
       console.log('Selected fridge photo URI:', uri);
-      router.push('/meals/recipe-suggestions');
+      router.push('/meals/ai-loading');
     }
   };
 
