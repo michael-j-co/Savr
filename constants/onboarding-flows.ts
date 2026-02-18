@@ -4,11 +4,16 @@
 
 export type QuestionType = 'single-choice' | 'multi-choice' | 'slider' | 'text' | 'logo-choice' | 'scroll-picker';
 
+/** Custom SVG icon key for identity question (assets/icons) */
+export type IdentityIconSvg = 'lightbulb' | 'bowl-food';
+
 export interface QuestionOption {
   id: string;
   label: string;
   subtitle?: string;
   icon?: string;
+  /** Custom SVG for identity question; when set, takes precedence over icon */
+  iconSvg?: IdentityIconSvg;
   logo?: any; // For logo-based options (image source)
 }
 
@@ -44,7 +49,7 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
         id: 'instant-ramen',
         label: 'Instant Ramen Maker',
         subtitle: '(Low effort meals)',
-        icon: 'bowl-rice',
+        iconSvg: 'bowl-food',
       },
       {
         id: 'bulk-meal-prepper',
@@ -56,7 +61,7 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
         id: 'aspiring-chef',
         label: 'Aspiring Chef',
         subtitle: '(Medium effort, Medium creativity)',
-        icon: 'user-chef',
+        iconSvg: 'lightbulb',
       },
       {
         id: 'michelin-chef',
@@ -216,7 +221,7 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
         id: 'instant-ramen',
         label: 'Instant Ramen Maker',
         subtitle: '(Low effort meals)',
-        icon: 'bowl-rice',
+        iconSvg: 'bowl-food',
       },
       {
         id: 'bulk-meal-prepper',
@@ -228,7 +233,7 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
         id: 'aspiring-chef',
         label: 'Aspiring Chef',
         subtitle: '(Medium effort, Medium creativity)',
-        icon: 'user-chef',
+        iconSvg: 'lightbulb',
       },
       {
         id: 'michelin-chef',

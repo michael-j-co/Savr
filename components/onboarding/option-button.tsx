@@ -1,3 +1,5 @@
+import type { IdentityIconSvg } from '@/constants/onboarding-flows';
+import { getIdentityIconComponent } from '@/components/onboarding/identity-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -6,6 +8,8 @@ interface OptionButtonProps {
   label: string;
   subtitle?: string;
   icon?: string;
+  /** Custom SVG for identity question; when set, used instead of icon */
+  iconSvg?: IdentityIconSvg;
   selected?: boolean;
   onPress: () => void;
 }
@@ -15,27 +19,38 @@ interface OptionButtonProps {
  * White rounded background with icon, text, and optional subtitle
  * Matches styling of "What kind of Savr" screen
  */
+const ICON_COLOR = '#789F80';
+
 export function OptionButton({
   label,
   subtitle,
   icon,
+  iconSvg,
   selected = false,
   onPress,
 }: OptionButtonProps) {
+  const IconComponent = iconSvg ? getIdentityIconComponent(iconSvg) : null;
+
   return (
     <TouchableOpacity
       style={[styles.button, selected && styles.buttonSelected]}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      {icon && (
+      {(icon || iconSvg) && (
         <View style={styles.iconContainer}>
-          <FontAwesome5
-            name={icon}
-            size={32}
-            color="#789F80"
-            solid
-          />
+          {IconComponent ? (
+            <IconComponent size={32} color={ICON_COLOR} />
+          ) : (
+            icon && (
+              <FontAwesome5
+                name={icon}
+                size={32}
+                color={ICON_COLOR}
+                solid
+              />
+            )
+          )}
         </View>
       )}
       <View style={styles.textContainer}>

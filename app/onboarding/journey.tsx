@@ -203,6 +203,7 @@ export default function JourneyScreen() {
                   label={option.label}
                   subtitle={option.subtitle}
                   icon={option.icon}
+                  iconSvg={option.iconSvg}
                   selected={selectedValue === option.id}
                   onPress={() => setSelectedValue(option.id)}
                 />
