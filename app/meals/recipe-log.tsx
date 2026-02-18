@@ -2,21 +2,31 @@ import { useThemeColor } from '@/hooks/use-theme-color';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ImageSourcePropType, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-// Mocked recipe data
+// Recipe thumbnail assets
+const RECIPE_IMAGES = {
+  veggieLasagna: require('@/assets/images/veggielasagna.jpg'),
+  bahnMi: require('@/assets/images/bahnmi.jpg'),
+  salsachicken: require('@/assets/images/salsachicken.jpg'),
+  fishfilet: require('@/assets/images/fishfilet.jpeg'),
+  lambchops: require('@/assets/images/lambchops.jpeg'),
+};
+
+// Mocked recipe data with thumbnails
 const MOCK_RECIPES = [
-  { id: '1', title: 'Veggie Lasagna', isFavorite: false },
-  { id: '2', title: 'Bahn Mi', isFavorite: false },
-  { id: '3', title: 'Salsa Chicken', isFavorite: false },
-  { id: '4', title: 'Fish Filet', isFavorite: false },
-  { id: '5', title: 'Lambchops', isFavorite: false },
+  { id: '1', title: 'Veggie Lasagna', isFavorite: false, image: RECIPE_IMAGES.veggieLasagna },
+  { id: '2', title: 'Bahn Mi', isFavorite: false, image: RECIPE_IMAGES.bahnMi },
+  { id: '3', title: 'Salsa Chicken', isFavorite: false, image: RECIPE_IMAGES.salsachicken },
+  { id: '4', title: 'Fish Filet', isFavorite: false, image: RECIPE_IMAGES.fishfilet },
+  { id: '5', title: 'Lambchops', isFavorite: false, image: RECIPE_IMAGES.lambchops },
 ];
 
 interface Recipe {
   id: string;
   title: string;
   isFavorite: boolean;
+  image: ImageSourcePropType;
 }
 
 /**
@@ -111,8 +121,8 @@ export default function RecipeLogScreen() {
                 />
               </TouchableOpacity>
               
-              {/* Card split design: gray top, green bottom */}
-              <View style={styles.cardTop} />
+              {/* Card: thumbnail top, title bottom */}
+              <Image source={recipe.image} style={styles.cardThumbnail} resizeMode="cover" />
               <View style={styles.cardBottom}>
                 <Text style={styles.recipeTitle}>{recipe.title}</Text>
               </View>
@@ -212,8 +222,9 @@ const styles = StyleSheet.create({
     left: 12,
     zIndex: 10,
   },
-  cardTop: {
+  cardThumbnail: {
     height: '50%',
+    width: '100%',
     backgroundColor: '#C4C4C4',
   },
   cardBottom: {

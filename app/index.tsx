@@ -2,7 +2,6 @@ import { DeliveryLogos } from '@/components/ui/delivery-logos';
 import { Logo } from '@/components/ui/logo';
 import { ThemedTextInput } from '@/components/ui/text-input';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { isOnboardingCompleted } from '@/utils/onboarding-storage';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -88,16 +87,11 @@ export default function AuthScreen() {
     // If no errors, navigate appropriately
     if (Object.keys(newErrors).length === 0) {
       if (mode === 'signup') {
-        // After signup, go to onboarding
+        // New users go through onboarding
         router.replace('/onboarding');
       } else {
-        // After login, check if onboarding is completed
-        const completed = await isOnboardingCompleted();
-        if (completed) {
-          router.replace('/(tabs)');
-        } else {
-          router.replace('/onboarding');
-        }
+        // Returning users go to dashboard
+        router.replace('/(tabs)');
       }
     }
   };
