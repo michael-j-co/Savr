@@ -21,6 +21,13 @@ export default function MealsLayout() {
         }} 
       />
       <Stack.Screen 
+        name="ingredient-inventory" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
+      <Stack.Screen 
         name="save-recipe" 
         options={{ 
           headerShown: false,
@@ -64,6 +71,13 @@ export default function MealsLayout() {
       />
       <Stack.Screen 
         name="find-recipe" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
+      <Stack.Screen 
+        name="add-ingredients" 
         options={{ 
           headerShown: false,
           presentation: 'card',

@@ -66,15 +66,20 @@ export function OnboardingLayout({
         )}
       </View>
 
-      {/* Main content */}
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        scrollEnabled={scrollEnabled}
-      >
-        {children}
-      </ScrollView>
+      {/* Main content: use View when scroll disabled to avoid nesting VirtualizedList (e.g. WheelPicker) inside ScrollView */}
+      {scrollEnabled ? (
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {children}
+        </ScrollView>
+      ) : (
+        <View style={[styles.scrollContent, styles.contentView]}>
+          {children}
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -112,5 +117,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 40,
+  },
+  contentView: {
+    flex: 1,
   },
 });

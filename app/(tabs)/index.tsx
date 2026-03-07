@@ -35,6 +35,9 @@ export default function HomeScreen() {
 
   const handleMenuNavigation = (itemId: string) => {
     switch (itemId) {
+      case 'ingredients':
+        router.push('/meals/ingredient-inventory');
+        break;
       case 'logout':
         // Clear onboarding data and navigate to login
         clearOnboardingData();
