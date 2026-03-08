@@ -4,8 +4,8 @@
 
 export type QuestionType = 'single-choice' | 'multi-choice' | 'slider' | 'text' | 'logo-choice' | 'scroll-picker';
 
-/** Custom SVG icon key for identity question (assets/icons) */
-export type IdentityIconSvg = 'lightbulb' | 'bowl-food';
+/** Custom SVG icon key for cooking-identity question (assets/icons) */
+export type IdentityIconSvg = 'bulk' | 'cereal' | 'michelin' | 'ramen' | 'aspiring';
 
 export interface QuestionOption {
   id: string;
@@ -43,31 +43,31 @@ export const COOK_MORE_FLOW: OnboardingQuestion[] = [
         id: 'cereal-burner',
         label: 'Cereal Burner',
         subtitle: "(can't make anything well)",
-        icon: 'fire',
+        iconSvg: 'cereal',
       },
       {
         id: 'instant-ramen',
         label: 'Instant Ramen Maker',
         subtitle: '(Low effort meals)',
-        iconSvg: 'bowl-food',
+        iconSvg: 'ramen',
       },
       {
         id: 'bulk-meal-prepper',
         label: 'Bulk Meal Prepper',
         subtitle: '(Low effort, repetitive meals)',
-        icon: 'box',
+        iconSvg: 'bulk',
       },
       {
         id: 'aspiring-chef',
         label: 'Aspiring Chef',
         subtitle: '(Medium effort, Medium creativity)',
-        iconSvg: 'lightbulb',
+        iconSvg: 'aspiring',
       },
       {
         id: 'michelin-chef',
         label: 'Michelin Chef',
         subtitle: '(High effort, Complex meals)',
-        icon: 'award',
+        iconSvg: 'michelin',
       },
     ],
   },
@@ -215,31 +215,31 @@ export const ORDER_LESS_FLOW: OnboardingQuestion[] = [
         id: 'cereal-burner',
         label: 'Cereal Burner',
         subtitle: "(can't make anything well)",
-        icon: 'fire',
+        iconSvg: 'cereal',
       },
       {
         id: 'instant-ramen',
         label: 'Instant Ramen Maker',
         subtitle: '(Low effort meals)',
-        iconSvg: 'bowl-food',
+        iconSvg: 'ramen',
       },
       {
         id: 'bulk-meal-prepper',
         label: 'Bulk Meal Prepper',
         subtitle: '(Low effort, repetitive meals)',
-        icon: 'box',
+        iconSvg: 'bulk',
       },
       {
         id: 'aspiring-chef',
         label: 'Aspiring Chef',
         subtitle: '(Medium effort, Medium creativity)',
-        iconSvg: 'lightbulb',
+        iconSvg: 'aspiring',
       },
       {
         id: 'michelin-chef',
         label: 'Michelin Chef',
         subtitle: '(High effort, Complex meals)',
-        icon: 'award',
+        iconSvg: 'michelin',
       },
     ],
   },
