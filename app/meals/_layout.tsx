@@ -90,6 +90,13 @@ export default function MealsLayout() {
           presentation: 'card',
         }} 
       />
+      <Stack.Screen 
+        name="upload-manually" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
     </Stack>
   );
 }

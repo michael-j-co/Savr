@@ -23,8 +23,7 @@ export default function AutoUploadReceiptsScreen() {
   const backgroundColor = useThemeColor({}, 'authBackground');
 
   const handleUploadManually = () => {
-    console.log('Auto-upload screen: Upload manually');
-    router.replace('/meals/ingredient-inventory');
+    router.push('/meals/upload-manually');
   };
 
   const handleSkip = () => {
