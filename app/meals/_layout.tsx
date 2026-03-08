@@ -118,6 +118,13 @@ export default function MealsLayout() {
           presentation: 'card',
         }} 
       />
+      <Stack.Screen 
+        name="pantry-points-redeem-confirm" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
     </Stack>
   );
 }

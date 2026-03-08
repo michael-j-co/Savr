@@ -1,7 +1,8 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  Modal,
   ScrollView,
   SafeAreaView,
   StyleSheet,
@@ -26,14 +27,35 @@ const REDEMPTION_OPTIONS = [
  * Redeem screen after selecting a store on the pantry-points screen.
  * Shows "You selected:" with the store logo and redemption options (points required).
  */
+type SelectedOffer = { label: string; points: number } | null;
+
 export default function PantryPointsRedeemScreen() {
   const router = useRouter();
   const { store: storeParam } = useLocalSearchParams<{ store?: string }>();
   const storeKey = storeParam ?? 'wholefoods';
   const Logo = getStoreLogo(storeKey);
+  const [selectedOffer, setSelectedOffer] = useState<SelectedOffer>(null);
 
   const handleHome = () => {
     router.replace('/(tabs)');
+  };
+
+  const handleOptionPress = (label: string, points: number) => {
+    setSelectedOffer({ label, points });
+  };
+
+  const handleConfirmRedemption = () => {
+    if (!selectedOffer) return;
+    const { label, points } = selectedOffer;
+    setSelectedOffer(null);
+    router.push({
+      pathname: '/meals/pantry-points-redeem-confirm',
+      params: { store: storeKey, label, points: String(points) },
+    });
+  };
+
+  const handleCancelModal = () => {
+    setSelectedOffer(null);
   };
 
   return (
@@ -77,6 +99,7 @@ export default function PantryPointsRedeemScreen() {
                   style={[styles.optionCard, canAfford ? styles.optionCardAvailable : styles.optionCardUnavailable]}
                   activeOpacity={0.85}
                   disabled={!canAfford}
+                  onPress={() => handleOptionPress(label, points)}
                 >
                   <Text style={styles.optionLabel}>{label}</Text>
                   <Text style={styles.optionPoints}>({points} pantry points)</Text>
@@ -86,6 +109,41 @@ export default function PantryPointsRedeemScreen() {
           </View>
         </View>
       </ScrollView>
+
+      <Modal
+        visible={selectedOffer !== null}
+        transparent
+        animationType="fade"
+        onRequestClose={handleCancelModal}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={handleCancelModal}
+        >
+          <TouchableOpacity activeOpacity={1} onPress={() => {}}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>
+                Redeem {selectedOffer?.label} for {selectedOffer?.points} pantry points?
+              </Text>
+              <TouchableOpacity
+                style={styles.modalConfirmButton}
+                onPress={handleConfirmRedemption}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.modalConfirmText}>Confirm redemption</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalCancelButton}
+                onPress={handleCancelModal}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.modalCancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -208,5 +266,48 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#000000',
     textAlign: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 24,
+    minWidth: 280,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#000000',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalConfirmButton: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  modalConfirmText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  modalCancelButton: {
+    paddingVertical: 10,
+  },
+  modalCancelText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#789F80',
   },
 });
