@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   formContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    backgroundColor: 'transparent',
+    borderRadius: 0,
     padding: 24,
     gap: 20,
   },
