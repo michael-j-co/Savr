@@ -83,6 +83,13 @@ export default function MealsLayout() {
           presentation: 'card',
         }} 
       />
+      <Stack.Screen 
+        name="auto-upload-receipts" 
+        options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} 
+      />
     </Stack>
   );
 }

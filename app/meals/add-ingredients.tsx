@@ -13,6 +13,10 @@ export default function AddIngredientsScreen() {
 
   const handleSelect = (option: 'auto' | 'manual' | 'skip') => {
     console.log('Selected add-ingredients option:', option);
+    if (option === 'auto') {
+      router.push('/meals/auto-upload-receipts');
+      return;
+    }
     router.replace('/meals/ingredient-inventory');
   };
 
