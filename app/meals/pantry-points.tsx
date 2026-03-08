@@ -1,11 +1,3 @@
-import ErewhonLogo from '@/assets/icons/erewhon.svg';
-import PublixLogo from '@/assets/icons/publix.svg';
-import RaleysLogo from '@/assets/icons/raleys.svg';
-import RalphsLogo from '@/assets/icons/ralphs.svg';
-import SproutsLogo from '@/assets/icons/sprouts.svg';
-import TraderJoesLogo from '@/assets/icons/traderjoes.svg';
-import VonsLogo from '@/assets/icons/vons.svg';
-import WholeFoodsLogo from '@/assets/icons/wholefoods.svg';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -17,21 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { STORE_LOGOS } from './pantry-stores';
 
 const SCREEN_BG = '#F0F4F0';
 const LOGO_SIZE = 88;
-
-/** Store logos in grid order: row 1 Whole Foods, Sprouts; row 2 Trader Joe's, Ralphs; etc. */
-const STORE_LOGOS = [
-  { key: 'wholefoods', Logo: WholeFoodsLogo },
-  { key: 'sprouts', Logo: SproutsLogo },
-  { key: 'traderjoes', Logo: TraderJoesLogo },
-  { key: 'ralphs', Logo: RalphsLogo },
-  { key: 'erewhon', Logo: ErewhonLogo },
-  { key: 'vons', Logo: VonsLogo },
-  { key: 'raleys', Logo: RaleysLogo },
-  { key: 'publix', Logo: PublixLogo },
-];
 
 /**
  * Savr Bank / Pantry Points screen.
@@ -43,6 +24,10 @@ export default function PantryPointsScreen() {
 
   const handleHome = () => {
     router.replace('/(tabs)');
+  };
+
+  const handleStorePress = (storeKey: string) => {
+    router.push({ pathname: '/meals/pantry-points-redeem', params: { store: storeKey } });
   };
 
   return (
@@ -78,9 +63,15 @@ export default function PantryPointsScreen() {
         <View style={styles.card}>
           <View style={styles.logoGrid}>
             {STORE_LOGOS.map(({ key, Logo }) => (
-              <View key={key} style={styles.logoCell}>
+              <TouchableOpacity
+                key={key}
+                style={styles.logoCell}
+                onPress={() => handleStorePress(key)}
+                activeOpacity={0.7}
+                accessibilityLabel={`Select ${key} to redeem`}
+              >
                 <Logo width={LOGO_SIZE} height={LOGO_SIZE} />
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
