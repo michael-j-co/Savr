@@ -56,11 +56,10 @@ export default function RecipeLogScreen() {
     );
   };
 
-  // Handle selecting an existing recipe
+  // Handle selecting an existing recipe; show Pantry Points reward then user can go home or redeem
   const handleSelectRecipe = (recipe: Recipe) => {
     console.log('Selected recipe:', recipe.title);
-    // Navigate back to home after selecting recipe
-    router.replace('/(tabs)');
+    router.replace('/meals/pantry-points-reward');
   };
 
   // Handle adding a new recipe

@@ -30,9 +30,8 @@ export default function SaveRecipeScreen() {
     }
 
     console.log('Saving recipe:', { title, category, description, ingredients, steps, imageUri });
-    
-    // Navigate back to home
-    router.replace('/(tabs)');
+
+    router.replace('/meals/pantry-points-reward');
   };
 
   // Handle photo picker using the system image library.

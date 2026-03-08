@@ -25,17 +25,16 @@ export default function RecipeSuggestionsScreen() {
   const router = useRouter();
   const backgroundColor = useThemeColor({}, 'authBackground');
 
-  // Handle selecting a recipe suggestion
+  // Handle selecting a recipe suggestion; show Pantry Points reward
   const handleSelectRecipe = (recipe: RecipeSuggestion) => {
     console.log('Selected recipe:', recipe.name);
-    // Navigate back to home
-    router.replace('/(tabs)');
+    router.replace('/meals/pantry-points-reward');
   };
 
-  // Handle skipping recipe suggestions
+  // Handle skipping recipe suggestions; still show reward for completing the flow
   const handleSkip = () => {
     console.log('Skipped recipe suggestions');
-    router.replace('/(tabs)');
+    router.replace('/meals/pantry-points-reward');
   };
 
   return (
