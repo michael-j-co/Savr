@@ -1,10 +1,10 @@
+import MixerIcon from '@/assets/icons/mixer.svg';
 import { MetricCard } from '@/components/dashboard/metric-card';
 import { NavigationSidebar } from '@/components/dashboard/navigation-sidebar';
 import { StatsRow } from '@/components/dashboard/stats-row';
 import { RadialSliderInput } from '@/components/onboarding/radial-slider-input';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { clearOnboardingData } from '@/utils/onboarding-storage';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -64,7 +64,7 @@ export default function HomeScreen() {
             onPress={() => setSidebarVisible(true)}
             activeOpacity={0.7}
           >
-            <FontAwesome5 name="bars" size={24} color="#789F80" solid />
+            <MixerIcon width={40} height={40} />
           </TouchableOpacity>
         </View>
 

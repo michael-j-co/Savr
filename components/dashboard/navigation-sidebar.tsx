@@ -1,13 +1,8 @@
+import MixerIcon from '@/assets/icons/mixer.svg';
 import { MENU_SECTIONS } from '@/constants/navigation-menu';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useEffect, useRef } from 'react';
-import {
-    Animated,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface NavigationSidebarProps {
   visible: boolean;
@@ -74,7 +69,7 @@ export function NavigationSidebar({
           onPress={onClose}
           activeOpacity={0.7}
         >
-          <FontAwesome5 name="times" size={24} color="#11181C" />
+          <MixerIcon width={40} height={40} />
         </TouchableOpacity>
 
         {/* Menu sections */}
@@ -127,13 +122,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 10,
-    paddingTop: 60,
+    paddingTop: 72,
     paddingHorizontal: 20,
     zIndex: 1000,
   },
   closeButton: {
     position: 'absolute',
-    top: 20,
+    top: 40,
     right: 20,
     width: 44,
     height: 44,
