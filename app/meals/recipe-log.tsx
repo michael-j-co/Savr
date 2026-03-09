@@ -93,7 +93,9 @@ export default function RecipeLogScreen() {
             onPress={handleAddNew}
             activeOpacity={0.7}
           >
-            <FontAwesome5 name="heart" size={24} color="#999" style={styles.heartIcon} />
+            <View style={styles.addNewPlusContainer}>
+              <FontAwesome5 name="plus" size={72} color="rgba(255,255,255,0.3)" />
+            </View>
             <View style={styles.addNewContent}>
               <Text style={styles.addNewText}>Add New</Text>
             </View>
@@ -195,12 +197,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  addNewPlusContainer: {
+    position: 'absolute',
+    zIndex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
   addNewContent: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 120,
   },
   addNewText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',

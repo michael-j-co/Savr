@@ -77,13 +77,6 @@ export default function MealsLayout() {
         }} 
       />
       <Stack.Screen 
-        name="add-ingredients" 
-        options={{ 
-          headerShown: false,
-          presentation: 'card',
-        }} 
-      />
-      <Stack.Screen 
         name="auto-upload-receipts" 
         options={{ 
           headerShown: false,

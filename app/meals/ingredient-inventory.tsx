@@ -2,21 +2,65 @@ import { useThemeColor } from '@/hooks/use-theme-color';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 interface Ingredient {
   id: string;
   name: string;
   isFavorite: boolean;
+  image: ImageSourcePropType;
 }
 
+// Static ingredient images used for the inventory grid
+const INGREDIENT_IMAGES = {
+  tomatoes: require('@/assets/images/tomatoes.jpg'),
+  salmon: require('@/assets/images/salmon.webp'),
+  lasagnaNoodles: require('@/assets/images/lasagnanoodles.webp'),
+  chickenBreast: require('@/assets/images/chickenbreast.webp'),
+  broccoli: require('@/assets/images/broccoli.avif'),
+};
+
 const MOCK_INGREDIENTS: Ingredient[] = [
-  { id: 'upload-new', name: 'Upload New', isFavorite: false },
-  { id: 'lasagna-noodles', name: 'Lasagna Noodles', isFavorite: false },
-  { id: 'broccoli', name: 'Broccoli', isFavorite: false },
-  { id: 'tomatoes', name: 'Tomatoes', isFavorite: false },
-  { id: 'salmon', name: 'Salmon', isFavorite: false },
-  { id: 'chicken-breast', name: 'Chicken Breast', isFavorite: false },
+  {
+    id: 'lasagna-noodles',
+    name: 'Lasagna Noodles',
+    isFavorite: false,
+    image: INGREDIENT_IMAGES.lasagnaNoodles,
+  },
+  {
+    id: 'broccoli',
+    name: 'Broccoli',
+    isFavorite: false,
+    image: INGREDIENT_IMAGES.broccoli,
+  },
+  {
+    id: 'tomatoes',
+    name: 'Tomatoes',
+    isFavorite: false,
+    image: INGREDIENT_IMAGES.tomatoes,
+  },
+  {
+    id: 'salmon',
+    name: 'Salmon',
+    isFavorite: false,
+    image: INGREDIENT_IMAGES.salmon,
+  },
+  {
+    id: 'chicken-breast',
+    name: 'Chicken Breast',
+    isFavorite: false,
+    image: INGREDIENT_IMAGES.chickenBreast,
+  },
 ];
 
 /**
@@ -44,17 +88,8 @@ export default function IngredientInventoryScreen() {
     );
   };
 
-  const handleSelectIngredient = (ingredient: Ingredient) => {
-    if (ingredient.id === 'upload-new') {
-      router.push('/meals/add-ingredients');
-      return;
-    }
-    console.log('Selected ingredient:', ingredient.name);
-    router.replace('/(tabs)');
-  };
-
   const handleAddNew = () => {
-    router.push('/meals/add-ingredients');
+    router.push('/meals/auto-upload-receipts');
   };
 
   return (
@@ -80,18 +115,19 @@ export default function IngredientInventoryScreen() {
             onPress={handleAddNew}
             activeOpacity={0.7}
           >
+            <View style={styles.addNewPlusContainer}>
+              <FontAwesome5 name="plus" size={72} color="rgba(255,255,255,0.3)" />
+            </View>
             <View style={styles.addNewContent}>
               <Text style={styles.addNewText}>Upload New</Text>
             </View>
           </TouchableOpacity>
 
           {filteredIngredients
-            .filter(ingredient => ingredient.id !== 'upload-new')
             .map(ingredient => (
               <TouchableOpacity
                 key={ingredient.id}
                 style={styles.card}
-                onPress={() => handleSelectIngredient(ingredient)}
                 activeOpacity={0.7}
               >
                 <TouchableOpacity
@@ -107,7 +143,11 @@ export default function IngredientInventoryScreen() {
                   />
                 </TouchableOpacity>
 
-                <View style={styles.cardTop} />
+                <Image
+                  source={ingredient.image}
+                  style={styles.cardThumbnail}
+                  resizeMode="cover"
+                />
                 <View style={styles.cardBottom}>
                   <Text style={styles.cardTitle}>{ingredient.name}</Text>
                 </View>
@@ -181,6 +221,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  addNewPlusContainer: {
+    position: 'absolute',
+    zIndex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
   addNewBadge: {
     width: 40,
     height: 40,
@@ -198,6 +246,7 @@ const styles = StyleSheet.create({
   addNewContent: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 120,
   },
   addNewText: {
     fontSize: 18,
@@ -215,7 +264,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardTop: {
+  cardThumbnail: {
     height: '50%',
     width: '100%',
     backgroundColor: '#C4C4C4',

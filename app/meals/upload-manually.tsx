@@ -1,6 +1,6 @@
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -55,7 +55,7 @@ export default function UploadManuallyScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: SCREEN_BG }]}>
       <View style={styles.content}>
         <Text style={styles.title}>Upload Manually</Text>
-        <Text style={styles.instruction}>Upload a Photo of your receipt</Text>
+        <Text style={styles.instruction}>Upload a photo of your receipt, refrigerator, or pantry</Text>
 
         <TouchableOpacity
           style={styles.photoCircle}
