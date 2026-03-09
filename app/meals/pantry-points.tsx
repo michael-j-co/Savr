@@ -2,13 +2,14 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
-  ScrollView,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { PantryPointsTotal } from './PantryPointsTotal';
 import { STORE_LOGOS } from './pantry-stores';
 
 const SCREEN_BG = '#F0F4F0';
@@ -51,11 +52,7 @@ export default function PantryPointsScreen() {
 
         {/* Points section */}
         <Text style={styles.savrBankTitle}>Savr Bank</Text>
-        <View style={styles.pointsValueWrap}>
-          {/* Black outline layer (offset) */}
-          <Text style={[styles.pointsValueLayer, styles.pointsValueOutline]}>30</Text>
-          <Text style={[styles.pointsValueLayer, styles.pointsValueFill]}>30</Text>
-        </View>
+        <PantryPointsTotal value={30} />
         <Text style={styles.totalLabel}>Total Pantry Points</Text>
         <Text style={styles.redeemableIntro}>Redeemable at stores below:</Text>
 
@@ -108,32 +105,6 @@ const styles = StyleSheet.create({
     color: '#5A7A64',
     textAlign: 'center',
     marginBottom: 12,
-  },
-  pointsValueWrap: {
-    position: 'relative',
-    width: '100%',
-    marginBottom: 4,
-    height: 82,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  pointsValueLayer: {
-    position: 'absolute',
-    width: '100%',
-    fontSize: 68,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-  pointsValueOutline: {
-    color: '#000000',
-    top: 0,
-    left: 0,
-    transform: [{ translateX: 1 }, { translateY: 1 }],
-  },
-  pointsValueFill: {
-    color: '#4CAF50',
-    top: 0,
-    left: 0,
   },
   totalLabel: {
     fontSize: 17,

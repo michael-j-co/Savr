@@ -38,6 +38,10 @@ export default function HomeScreen() {
       case 'ingredients':
         router.push('/meals/ingredient-inventory');
         break;
+      case 'rewards':
+      case 'profile-rewards':
+        router.push('/meals/pantry-points');
+        break;
       case 'logout':
         // Clear onboarding data and navigate to login
         clearOnboardingData();
