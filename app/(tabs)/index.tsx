@@ -19,14 +19,14 @@ export default function HomeScreen() {
   const buttonColor = useThemeColor({}, 'buttonPrimary');
   const buttonTextColor = useThemeColor({}, 'buttonText');
   
-  // Initialize all stats to 0 (will be updated by future features)
+  // Temporary hard-coded stats; will be wired to real data later
   const [savingsAmount, setSavingsAmount] = useState(0);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   
   const stats = [
-    { value: 0, label: 'ingredients left' },
-    { value: 0, label: 'skips left' },
-    { value: 0, label: 'meals ordered' },
+    { value: 10, label: 'ingredients left' },
+    { value: 2, label: 'skips left' },
+    { value: 2, label: 'meals ordered' },
   ];
 
   const handleLogMeal = () => {
@@ -69,7 +69,9 @@ export default function HomeScreen() {
         </View>
 
         {/* Stats Row */}
-        <StatsRow stats={stats} />
+        <View style={styles.statsSection}>
+          <StatsRow stats={stats} />
+        </View>
 
         {/* Savings Gauge Section */}
         <View style={styles.gaugeSection}>
@@ -83,13 +85,12 @@ export default function HomeScreen() {
               step={1}
               unit="$"
             />
-            <Text style={styles.savedText}>Saved so far!</Text>
           </View>
         </View>
 
         {/* Meals Cooked Counter */}
         <View style={styles.mealsSection}>
-          <MetricCard value={0} label="Meals Cooked" size="large" />
+          <MetricCard value={3} label="Meals Cooked" size="large" />
         </View>
 
         {/* Action Button */}
@@ -128,6 +129,9 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     justifyContent: 'space-between',
   },
+  statsSection: {
+    marginBottom: 24,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -161,12 +165,6 @@ const styles = StyleSheet.create({
   gaugeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  savedText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#789F80',
-    marginTop: 4,
   },
   mealsSection: {
     marginVertical: 8,
